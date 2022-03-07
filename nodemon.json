@@ -1,0 +1,18 @@
+{
+	"restartable": "rs",
+	"ignore": [
+		".git",
+		"node_modules/**/node_modules"
+	],
+	"verbose": true,
+	"execMap": {
+		"html": "parcel"
+	},
+	"watch": [
+		"scr/"
+	],
+	"env": {
+		"NODE_ENV": "development"
+	},
+	"ext": "ts json"
+}
