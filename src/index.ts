@@ -1,4 +1,5 @@
 import { getStudent } from './overloaded-functions'
+import MyStorage from './singleten'
 
 export default class Person{
     constructor(private name: string){}
@@ -12,5 +13,6 @@ export default class Person{
     queryStudent(){
         let student = getStudent("NO1", 2);
         console.log(student)
+        MyStorage.getInstance().setItem("student", student)
     }
 }
