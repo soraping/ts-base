@@ -1,3 +1,5 @@
 import Person from './src'
 
-new Person("zhangsan").getName()
+let person = new Person("zhangsan")
+
+person.queryStudent()

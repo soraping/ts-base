@@ -1,0 +1,32 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "zhangsan",
+            "age": 10,
+            "score": 90,
+            "className": "NO1"
+        },
+        {
+            "id": 2,
+            "name": "lisi",
+            "age": 11,
+            "score": 85,
+            "className": "NO1"
+        },
+        {
+            "id": 3,
+            "name": "wanger",
+            "age": 12,
+            "score": 91,
+            "className": "NO2"
+        },
+        {
+            "id": 4,
+            "name": "mazi",
+            "age": 13,
+            "score": 92,
+            "className": "NO2"
+        }
+    ]
+}
