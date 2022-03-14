@@ -55,8 +55,25 @@ class Bus extends Vehicle {
 }
 
 
-class Customer {
-    payCost(vehicle: Vehicle){
+class Customer<T extends Vehicle> {
+
+    constructor(private vehicles: T[] = []){}
+
+    insertValue(val: T){
+        this.vehicles.push(val)
+    }
+
+    getValues(){
+        return this.vehicles
+    }
+
+    getPayCostTotal(){
+        return this.getValues().reduce((prev, cur) => {
+            return prev + cur.getCost()
+        }, 0)
+    }
+
+    payCost(vehicle: T){
         // 多态调用
         console.log(vehicle.getName())
         console.log(vehicle.getCost())
@@ -83,10 +100,14 @@ function isCar(ccc: any): ccc is Car {
 }
 
 let customer = new Customer()
+customer.insertValue(new Car())
+customer.insertValue(new Truck())
 
-// 父类的类型指向任意子类
-// 可以调用子类重写的父类方法
-let vehicle: Vehicle = new Car()
+console.log(customer.getPayCostTotal())
 
-customer.payCost(vehicle)
+// // 父类的类型指向任意子类
+// // 可以调用子类重写的父类方法
+// let vehicle: Vehicle = new Car()
+
+// customer.payCost(vehicle)
 
