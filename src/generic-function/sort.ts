@@ -29,8 +29,8 @@ console.log(quickSort([7,4,8,12,81,45,12,96,33]));
  * @param arr 
  * @returns 
  */
-function sortChinese<T extends string>(arr: T[]): T[]{
-    return arr.sort((first, second) => first.localeCompare(second, 'zh-CN'))
+function sortChinese<T>(arr: T[]): T[]{
+    return arr.sort((first, second) => (first as any).localeCompare(second, 'zh-CN'))
 }
 let arr = ["南京", "上海", "北京", "广州", "苏州", "成都", "武汉"]
 console.log(sortChinese(arr))
@@ -39,9 +39,42 @@ console.log(sortChinese(arr))
  * 字符串自排序
  * @param str 
  */
-function sortStrSelf(str: string): string{
+function sortStrSelf(str: string, count: number = 5): string{
     let strArr = str.split('')
-    return quickSort(strArr).join('')
+    let newString = quickSort(strArr).join('')
+    return newString.length > count ? newString.substring(0, count) + "..." : newString
 }
 console.log(sortStrSelf('cabinoewd'))
 
+
+function isChinese<T>(arr: T[]): boolean{
+    let pattern = /[\u4e00-\u9fa5]/g
+    return arr.some(item => pattern.test(item as any))
+}
+
+function isString(data: any): data is string{
+    return typeof data === 'string'
+}
+
+function isArray<T>(data: any): data is T[]{
+    return data instanceof Array
+}
+
+function sort(data: string, count?: number): string
+function sort<T>(data: T, count?: number): T
+function sort(data: any, count: number = 5): any {
+
+    // 字符串类型
+    if(isString(data)){
+        return sortStrSelf(data, count)
+    }
+
+    // 数组判定
+    if(isArray(data)){
+        if(isChinese(data)){
+            return sortChinese(data)
+        }
+        let newArr = data.map(item => isString(item) ? sortStrSelf(item) : item)
+        return quickSort(newArr as any)
+    }
+}
