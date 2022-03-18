@@ -8,7 +8,7 @@ class Person1 {
     }
 }
 
-type TConstructor<T> = new (...args: any) => T
+export type TConstructor<T> = new (...args: any) => T
 
 
 function createConstructFactory<T>(Con: TConstructor<T>): T{
