@@ -111,4 +111,66 @@ let foo2: Foo & Bar = {
 
 ### 类型分发
 
+#### `infer` 出现的位置
+
+- 出现在 `extends` 条件语句后的函数类型的参数类型位置上
+
+```javascript
+interface IPerson {
+    id: string
+    name: string
+    age: number
+}
+
+type TCustom = (params: IPerson) => string
+type TInferType<T> = T extends (options: infer P) => any ? P : T
+
+// 等效于 type TInferResult = IPerson
+// infer 替换了函数参数的类型
+type TInferResult = TInferType<TCustom>
+```
+
+- 出现在 `extends` 条件语句后的函数类型的返回值类型上
+
+```javascript
+type TPerson = (id: string) => IPerson
+type TInferType<T> = T extends (options: any) => infer P ? P : T
+
+// 等效于 TInferResult = IPerson
+// infer 替换了返回值的类型
+type TInferResult = TInferType<TPerson>
+```
+
+- 出现在类型的泛型具体化类型上
+
+```javascript
+let p1: IPerson = {
+    id: 'x111',
+    name: 'zhangsan',
+    age: 11
+}
+
+let p2: IPerson = {
+    id: 'x112',
+    name: 'lisi',
+    age: 12
+}
+
+let pSet = new Set<IPerson>([p1, p2])
+type TPsetType = typeof pSet;
+
+type TElementOf<T> = T extends Set<infer R> ? R : never
+
+// 替换了 set 元素的类型
+let result: TElementOf<TPsetType>
+```
+
+#### `infer` 为什么只能出现在泛型约束的场景下
+
+`infer` 是一个占位符，当泛型被真实类型替代后，真实类型会根据 `infer` 的位置推导出所对应的类型。
+
+例如 `infer` 占了函数参数类型的位置，那真实类型过来后，会将函数参数的真实类型赋值给 `infer` 这个位置。
+
+所以只有类型约束的场景下，才会有位置的匹配情况，然后根据位置来填充和提取真实类型。
+
 ### 装饰器
