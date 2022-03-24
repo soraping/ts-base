@@ -28,3 +28,5 @@ function createConstructFactory<T, P extends TConstructorType<any>>(constructor:
 }
 
 createConstructFactory<Person, typeof Person>(Person, "name", 12).say()
+
+export {}
