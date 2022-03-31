@@ -70,4 +70,22 @@ dataList.forEach(data => {
 console.log(recordData)
 
 
+/**
+ * Record，object, map 区别
+ */
+// object 就是一个数据类型
+let pp: object = {name: 'lisi', 111: 'cccc'}
+// 这里是会报错的，因为编译器会往 object 类型上找 111 这个属性，发现 object 类型上没有，所以会报错
+// 所以 object 只能赋值，但不能修改。
+// pp[111] = 'ddd'
+
+// map 类型是一个底层数据结构
+let qq = new Map<string, IPerson>()
+qq.set('class111', recordData['d101'])
+// Map 相对于 Record 是一个比较重的一个类型，而且 Map 是需要 new 的，所以会占用更多的资源空间。
+// 读取数据和展示数据频繁，那就使用 Record
+// 增删改多的情况使用 Map
+
+
+
 export {}
